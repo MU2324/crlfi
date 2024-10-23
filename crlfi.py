@@ -19,12 +19,10 @@ import status
 import webbrowser
 import os
 
-
 def helpbanner(ctx, params, value):
     if value:
         helpers.display_help()
         ctx.exit()
-
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-u', '--url', type=str, help="URL to scan")
@@ -33,22 +31,24 @@ def helpbanner(ctx, params, value):
 @click.option('-c', '--chatid', type=str, help='Creating Telegram Notification')
 @click.option('-b', '--blog', flag_value=True, help='Open Blog to read about Bug')
 @click.option('-h', '--help', 'helpbanner', is_flag=True, expose_value=False, is_eager=True, callback=helpbanner, help="help menu")
+
+
 def main(url, input, output, chatid, blog):
     if url:
-        banner()
-        cvescan(url, output)
+        helpers.banner()
+        scan.cvescan(url, output)
 
     if input:
-        banner()
-        reader(input, output)
+        helpers.banner()
+        filereader.reader(input, output)
 
     if chatid:
-        banner()
-        new_chatid(chatid)
+        helpers.banner()
+        configure.new_chatid(chatid)
 
     if blog:
-        banner()
-        open(const.Data.blog)
+        helpers.banner()
+        webbrowser.open(const.Data.blog)
 
 
 if __name__ == "__main__":
